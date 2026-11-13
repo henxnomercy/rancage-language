@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "nova-language"
+version = "0.1.0"
+description = "NOVA Universal Language reference compiler and bytecode VM"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { file = "licenses/CORE-PROPRIETARY.txt" }
+authors = [{ name = "NOVA Project" }]
+keywords = ["programming-language", "compiler", "virtual-machine", "bytecode"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Other",
+  "Topic :: Software Development :: Compilers",
+]
+dependencies = []
+
+[project.scripts]
+nova = "nova.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]

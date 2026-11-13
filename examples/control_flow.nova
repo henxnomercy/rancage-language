@@ -1,0 +1,16 @@
+module control_flow;
+
+fn main() -> int {
+    let count: int = 0;
+    while (count < 5) {
+        print(count);
+        count = count + 1;
+    }
+
+    if (count == 5) {
+        print("finished");
+    } else {
+        print("unexpected");
+    }
+    return 0;
+}

@@ -1,0 +1,7 @@
+NOVA CORE — PROVISIONAL PROPRIETARY NOTICE
+
+Copyright (c) [OWNER TO BE CONFIRMED]. All rights reserved.
+
+This notice records the intended ownership model for the NOVA compiler and runtime core. The copyright owner, permitted users, redistribution rights, commercial terms, and enforcement terms have not yet been confirmed. This placeholder is not a finalized commercial license and should be replaced by a reviewed license before public distribution.
+
+No ownership, trademark registration, or legal exclusivity is claimed by this placeholder.
