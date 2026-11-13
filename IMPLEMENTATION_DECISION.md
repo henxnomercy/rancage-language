@@ -1,42 +1,34 @@
 # NOVA Implementation Decision — Python First
 
 **Decision status:** Approved by project owner on 2026-11-13  
-**Applies to:** NOVA v0.1.0 and the active development line until explicitly changed.
+**Active line:** v0.1.0 baseline and subsequent development unless explicitly changed
 
 ## Decision
 
-The active NOVA compiler, command-line interface, reference virtual machine, and initial tooling will be implemented in **Python**.
-
-Rust is not the active implementation language. The experimental Rust Core archive is superseded and must not be merged into the canonical NOVA repository. Do not install Rust or Cargo as a prerequisite for NOVA v0.1.0.
+The active NOVA compiler, CLI, reference VM, and initial tooling are implemented in **Python**. Rust is not the active implementation language. The experimental Rust Core archive is superseded and must not be merged into the canonical NOVA repository.
 
 ## Why
 
 - The project owner already has Python installed.
-- A working Python reference implementation exists and is the current tested baseline.
-- Minimizing setup friction is more valuable at this stage than rewriting the compiler before its language semantics and IR are stable.
-- Python's standard library is sufficient for the current v0.1.0 compiler and VM; no third-party runtime package is required.
+- A working Python reference compiler and VM form the published v0.1.0 baseline.
+- Minimizing setup friction is more valuable than rewriting the compiler before language semantics and NOVA-IR are mature.
+- Python's standard library is sufficient for the current compiler and VM.
 
-## What this means
+## Standalone distribution decision
 
-- NOVA remains its own programming language with its own syntax, semantics, AST, NOVA-IR, and `.nvm` bytecode format.
-- Python is the implementation language of the compiler and reference VM. NOVA programs are not Python programs, and NOVA users do not need to learn Python.
-- To run the source-based NOVA 0.1.0 toolchain, Python 3.10+ must be installed.
-- No Rust, Java, JavaScript, C, or C++ toolchain is required for the current baseline.
-- The Python implementation uses Python standard-library modules at runtime. `setuptools` is only used if installing the developer package through `pip`.
+The `0.2.0-alpha.1` preview uses PyInstaller as a build-time packaging tool. PyInstaller bundles the Python interpreter/runtime with NOVA, allowing end users to run the Windows executable without a separate Python installation. PyInstaller is not required during normal source development or by end users.
 
-## Standalone strategy
+This packaging approach does not make NOVA a native machine-code compiler and does not remove Python from the bundled executable.
 
-Do not promise a native standalone compiler yet. There are two separate future options:
+## Future options
 
-1. **Packaged distribution:** bundle the Python interpreter and NOVA program into a Windows executable using a packaging tool such as PyInstaller. This removes the end-user Python installation requirement, but the bundled executable still contains a Python runtime.
-2. **Self-hosting:** after the language, standard library, and compiler capabilities mature, implement the NOVA compiler in NOVA itself and bootstrap it from the existing Python compiler. This is a long-term milestone, not a v0.1 requirement.
-
-A native rewrite in Rust, C, C++, Zig, or another systems language is not approved by this decision. Revisit only if measured performance, deployment, or platform constraints justify it and the project owner explicitly approves the change.
+- Keep Python as the reference compiler while stabilizing language semantics and IR.
+- Consider NOVA self-hosting only after the language has enough features to implement its own compiler.
+- Revisit a native implementation in Rust, C, C++, Zig, or another systems language only if measured needs justify it and the project owner explicitly approves it. No such rewrite is currently approved.
 
 ## Rules for AI contributors
 
-- Treat this document as the current implementation-language decision.
-- Do not create Rust/C/C++/Zig compiler code or add Cargo files to the canonical repository.
-- Do not replace the working Python compiler as part of v0.1.0 stabilization.
-- Preserve language semantics and add tests before changing compiler behavior.
-- Update this decision only with explicit project-owner approval.
+- Python is the approved implementation language. Do not create Rust/C/C++/Zig compiler code or add Cargo files.
+- Do not change published v0.1.0 tags or rewrite Git history.
+- Preserve language semantics and NOVA-IR compatibility unless a reviewed task explicitly changes them.
+- PyInstaller is packaging/build tooling only. Never describe the bundle as native or self-hosted.

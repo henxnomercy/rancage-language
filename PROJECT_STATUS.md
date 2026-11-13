@@ -1,56 +1,43 @@
 # NOVA Project Status
 
-**Version:** 0.1.0  
-**Status:** Frozen baseline — prepared for initial GitHub publication  
-**Implementation language:** Python 3.10+  
-**Next planned version:** 0.2 (not part of this release)
+**Frozen release:** `v0.1.0`
+**Current development preview:** `0.2.0-alpha.1`
+**Active implementation language:** Python 3.10+
+**Current task:** Windows executable packaging preview
 
-## Active implementation decision
+## Version policy
 
-The project owner has selected Python for the active compiler, CLI, and reference VM implementation. The earlier Rust Core experiment is superseded and is not part of the canonical project. Do not require Rust or Cargo for NOVA v0.1.0. See [IMPLEMENTATION_DECISION.md](IMPLEMENTATION_DECISION.md).
+Do not modify the published `v0.1.0` tag. Packaging work takes place in new commits after that tag and is currently an unreleased `0.2.0-alpha.1` preview. The language grammar and semantics remain at the v0.1 baseline unless a separately reviewed change is approved.
 
-## Implemented
+## Implemented in the source compiler
 
-- Lexer and parser for the documented NOVA 0.1 subset.
-- AST and static type checker.
-- JSON NOVA-IR 0.1 compiler.
-- Restricted reference virtual machine with opcode validation, instruction budget, and call-depth limit.
-- CLI commands: `check`, `build`, `run`, and `targets`.
-- Three example programs.
-- Thirteen automated unit/integration tests.
+- Lexer, parser, AST, and static type checker.
+- JSON NOVA-IR compiler and reference VM.
+- CLI commands `check`, `build`, `run`, and `targets`.
+- Functions, variables, conditions, loops, and execution limits.
+- 13 unit/integration tests.
 
-## Dependencies
+## Added in 0.2.0-alpha.1
 
-- Python 3.10 or newer.
-- Python standard library only at runtime.
-- `setuptools` is used only for package installation/build tooling.
-- No Rust, Cargo, C/C++, Java, or JavaScript tooling is required to run the current baseline.
+- PyInstaller build dependency, used only when creating distributable executables.
+- Windows scripts to build one-file and one-folder bundles.
+- Smoke tests for both bundled formats.
+- GitHub Actions workflow to build and upload a Windows x64 artifact.
+
+## What this packaging means
+
+The executable bundles the Python interpreter/runtime. End users do not need to install Python separately. The compiler is still implemented in Python; this is not native code generation and not NOVA self-hosting.
+
+## Verification status
+
+- The v0.1 baseline was tested locally by the project owner on Windows with Python 3.14.6 (13 tests passed) and its original GitHub Actions workflow passed.
+- In this preview, the source tests must be rerun after changes.
+- The Windows standalone workflow is configured to run on pushes to `main` and `feature/windows-standalone`, on pull requests targeting `main`, and manually. The PyInstaller Windows executable must be built and smoke-tested by that Windows workflow before the standalone package is considered verified.
+- Do not state that the bundled executable works until the Windows workflow is green and its artifact has been downloaded and tested on a clean Windows environment without Python.
 
 ## Not implemented
 
-- Native machine-code generation.
-- Bundled one-click Windows executable distribution.
-- Android APK/AAB backend or Android Studio plugin.
-- iOS backend.
-- WebAssembly backend.
-- JavaScript, Kotlin, Luau, JVM, or .NET backends.
-- Package manager, language server, debugger, formatter, and obfuscator.
-- Cryptographic signing/encryption of bytecode or hardened sandboxing.
-
-## Local verification record
-
-The existing v0.1.0 package was tested in the available Linux environment:
-
-- `PYTHONPATH=src python -m unittest discover -s tests -v` — 13 tests passed.
-- `PYTHONPATH=src python -m nova --help` — CLI help displayed.
-- `PYTHONPATH=src python -m nova check examples/hello.nova` — passed.
-- `PYTHONPATH=src python -m nova run examples/hello.nova` — expected greeting output.
-
-The Windows `.cmd` wrappers still need to be verified on the project owner's Windows computer. GitHub Actions is configured to test Python 3.10–3.13 after publication.
-
-## Publication gate
-
-- Upload to a private GitHub repository first.
-- Wait for the GitHub Actions CI workflow to pass.
-- Confirm project ownership, contributor terms, and intended licensing before making the repository public or distributing the core commercially.
-- Do not call NOVA 0.1.0 production-ready. It is an experimental reference implementation.
+- Native machine-code code generation.
+- Self-hosting compiler.
+- Android, iOS, WebAssembly, Roblox/Luau, or other production backends.
+- Code signing, updater, installer, hardened sandbox, bytecode encryption, or anti-tamper.

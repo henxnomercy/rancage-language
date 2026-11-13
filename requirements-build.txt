@@ -1,0 +1,2 @@
+# Build-time only. End users do not need to install PyInstaller.
+PyInstaller==6.22.3
