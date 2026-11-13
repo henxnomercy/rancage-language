@@ -24,7 +24,7 @@ def compile_source(path: Path) -> dict:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="nova", description="NOVA Universal Language — reference compiler 0.1")
+    parser = argparse.ArgumentParser(prog="nova", description="NOVA Universal Language — Python reference compiler")
     parser.add_argument("--version", action="version", version=f"NOVA {__version__}")
     sub = parser.add_subparsers(dest="command", required=True)
     check = sub.add_parser("check", help="Periksa sintaks dan tipe source NOVA")

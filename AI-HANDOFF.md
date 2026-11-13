@@ -1,31 +1,34 @@
-# AI Handoff — NOVA v0.1.0
+# AI Handoff — NOVA 0.2.0-alpha.1
 
-## Current source of truth
+## Source of truth
 
-- Active baseline: NOVA 0.1.0.
-- Active compiler implementation language: Python 3.10+.
-- Canonical implementation: `src/nova/`.
+- Published baseline: `v0.1.0`, commit `556b37f` (immutable).
+- Current development line: `0.2.0-alpha.1`.
+- Active compiler implementation: Python 3.10+.
+- Canonical compiler: `src/nova/`.
 - Language specification: `SPEC.md`.
-- Implementation decision: `IMPLEMENTATION_DECISION.md`.
-- Current status: `PROJECT_STATUS.md`.
-
-## Important architecture decision
-
-The project owner explicitly reverted the planned Rust implementation and selected Python because Python is already installed and reduces setup friction. The Rust Core experiment is superseded. Do not install Rust, add Cargo, or merge Rust Core into the canonical repository.
-
-## Baseline verification
-
-Recorded in the prepared package: 13 unit/integration tests passed in the available Linux environment. Windows wrapper and GitHub Actions results must be verified by the project owner after extraction and push.
+- Implementation policy: `IMPLEMENTATION_DECISION.md`.
 
 ## Current task
 
-Stabilize and publish the Python v0.1.0 baseline. Do not add language features or platform backends to this frozen release.
+Create a Windows standalone packaging preview using PyInstaller. This is a distribution convenience: the executable bundles Python; it is not native compilation and not self-hosting.
 
-## Handoff format for the next agent
+## Added files
 
-When finishing a task, record:
-1. Task and files changed.
-2. Commands executed.
-3. Exact test/build results (do not claim tests passed if not run).
-4. Known limitations or failures.
-5. Next smallest actionable task.
+- `nova_entry.py`: package entry point.
+- `requirements-build.txt`: pinned build-only PyInstaller dependency.
+- `build-windows.ps1`: builds one-file and one-folder Windows executables and distribution ZIP.
+- `test-bundle.ps1`: smoke-tests both executable variants, including `.nvm` build/run.
+- `.github/workflows/standalone-windows.yml`: Windows CI build and artifact upload.
+- `BUILDING-STANDALONE.md` and `THIRD-PARTY-NOTICES.md`: build and distribution documentation.
+
+## Verification requirements
+
+- Re-run all 13 source tests.
+- On Windows, install `requirements-build.txt`, run `build-windows.ps1`, and run `test-bundle.ps1`.
+- GitHub Actions must be green before calling the Windows executable verified.
+- Download and test the artifact on a clean Windows machine without Python to verify the end-user requirement.
+
+## Next smallest task
+
+Push this preview to the NOVA repository, inspect the `NOVA Windows Standalone Build` workflow, download its artifact, and test `nova.exe` on a Windows environment without Python installed.

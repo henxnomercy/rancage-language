@@ -1,35 +1,38 @@
-# Instructions for AI coding agents
+# Instructions for NOVA coding agents
 
-## Project baseline
+## Current source of truth
 
-- Project: NOVA Universal Programming Language.
-- Current baseline: `0.1.0`.
-- Status: frozen for initial GitHub publication.
+- Published baseline: `v0.1.0` (frozen).
+- Current development preview: `0.2.0-alpha.1` (Windows standalone packaging).
 - Active implementation language: Python 3.10+.
-- Read `IMPLEMENTATION_DECISION.md`, `README.md`, `SPEC.md`, `PROJECT_STATUS.md`, `ROADMAP.md`, and `SECURITY.md` before making changes.
+- Canonical implementation: `src/nova/`.
+- Language specification: `SPEC.md`.
+- Implementation decision: `IMPLEMENTATION_DECISION.md`.
+- Current project status: `PROJECT_STATUS.md`.
 
 ## Non-negotiable rules
 
-1. Python is the approved implementation language for the active v0.1 compiler, CLI, and reference VM. Do not add Rust/C/C++/Zig compiler code or Cargo files to the canonical repository.
-2. The earlier Rust Core archive is superseded and must not be merged into this repository.
-3. Do not silently change NOVA syntax, language semantics, NOVA-IR format, CLI behavior, or package version in the 0.1.0 baseline.
-4. Do not claim support for a platform/backend unless implementation and conformance tests exist. In 0.1.0, only the experimental Python reference VM is implemented.
-5. Do not introduce third-party runtime dependencies without explaining why and updating `pyproject.toml` and documentation. Prefer the Python standard library for the current baseline.
-6. Never add API keys, tokens, passwords, signing keys, personal data, or `.env` files to Git.
-7. Do not remove or weaken tests just to make CI pass.
-8. Preserve ownership notices in `licenses/`. Do not invent a copyright owner or legal license.
-9. Do not run destructive Git commands (`reset --hard`, `clean -fd`, force push, history rewrite) without explicit project-owner approval.
+1. Python is the approved implementation language for the active NOVA compiler, CLI, and reference VM. Do not add Rust/C/C++/Zig compiler code or Cargo files.
+2. The earlier Rust Core experiment is superseded and must not be merged into the canonical repository.
+3. Do not rewrite or move the published `v0.1.0` tag.
+4. Do not change NOVA syntax, language semantics, CLI behavior, or NOVA-IR format in a packaging-only task.
+5. PyInstaller is a build-time packaging dependency only. The packaged executable embeds Python; it is not a native compiler.
+6. Do not claim a standalone target works until its build and smoke tests have passed on that target OS.
+7. Never add API keys, tokens, passwords, signing keys, personal data, or `.env` files to Git.
+8. Do not remove or weaken tests to make CI pass.
+9. Preserve ownership notices in `licenses/` and third-party notices. Do not invent legal ownership.
+10. Do not run destructive Git commands (`reset --hard`, `clean -fd`, force push, history rewrite) without explicit owner approval.
 
 ## Required workflow
 
-1. Identify the exact task and acceptance criteria before editing.
-2. Make the smallest change that satisfies the task.
-3. Add or update tests for behavior changes.
-4. Run `run-tests.cmd` on Windows, or `PYTHONPATH=src python -m unittest discover -s tests -v` on Linux/macOS.
-5. Verify the CLI using examples in `README.md`.
-6. Summarize changed files, test results, known limitations, and follow-up in `AI-HANDOFF.md`.
-7. Keep one implementation agent per task. Other agents may review but should not edit the same task simultaneously.
+1. Read `IMPLEMENTATION_DECISION.md`, `README.md`, `SPEC.md`, `PROJECT_STATUS.md`, `ROADMAP.md`, and `SECURITY.md`.
+2. Identify the smallest task and acceptance criteria.
+3. Add or update tests.
+4. Run `run-tests.cmd` on Windows or `PYTHONPATH=src python -m unittest discover -s tests -v` elsewhere.
+5. For packaging tasks, install `requirements-build.txt`, run `build-windows.ps1`, then `test-bundle.ps1` on Windows.
+6. Report exact commands and results. Do not claim unexecuted tests passed.
+7. Update `AI-HANDOFF.md` with changes, results, limitations, and next task.
 
 ## Version policy
 
-The 0.1.0 baseline is frozen. New language features belong to a later version or separately approved development branch. Publication preparation may add repository metadata, tests, CI, and documentation without changing 0.1 language semantics.
+The published 0.1.0 tag is immutable. Current preview changes are unreleased development commits. Do not create a new stable release until source CI and target-platform executable smoke tests pass.

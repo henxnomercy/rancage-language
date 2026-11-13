@@ -12,6 +12,10 @@ NOVA is pre-1.0. The current VM is a small reference runtime, not a hardened san
 - Execution-step and call-depth limits.
 - No language opcodes for filesystem, network, process creation, dynamic imports, or native calls.
 
+## Packaging note
+
+The Windows standalone preview uses PyInstaller to bundle the Python runtime. This removes the separate Python installation requirement but does not encrypt, hide, or harden NOVA source/bytecode. Packaged applications can be inspected and unpacked.
+
 ## Not implemented
 
 - Cryptographic signing or encryption of `.nvm` files.
