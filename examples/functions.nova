@@ -1,0 +1,11 @@
+module functions;
+
+fn square(value: int) -> int {
+    return value * value;
+}
+
+fn main() -> int {
+    let answer: int = square(12);
+    print(answer);
+    return 0;
+}
