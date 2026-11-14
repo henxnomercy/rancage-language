@@ -23,7 +23,7 @@ $OneDirDist = Join-Path $DistRoot 'onedir'
 $OneFileDist = Join-Path $DistRoot 'onefile'
 $WorkRoot = Join-Path $Root '.pyinstaller-work'
 $SpecRoot = Join-Path $Root '.pyinstaller-spec'
-$PackageRoot = Join-Path $DistRoot 'nova-windows-x64'
+$PackageRoot = Join-Path $DistRoot 'cage-windows-x64'
 $PortableRoot = Join-Path $PackageRoot 'portable'
 
 # Remove only generated directories owned by this script.
@@ -35,9 +35,9 @@ $PortableRoot = Join-Path $PackageRoot 'portable'
 
 New-Item -ItemType Directory -Force -Path $OneDirDist, $OneFileDist, $WorkRoot, $SpecRoot | Out-Null
 
-$EntryPoint = Join-Path $Root 'nova_entry.py'
+$EntryPoint = Join-Path $Root 'cage_entry.py'
 $SourcePath = Join-Path $Root 'src'
-$ExamplePath = Join-Path $Root 'examples\hello.nova'
+$ExamplePath = Join-Path $Root 'examples\hello.cage'
 if (-not (Test-Path -LiteralPath $EntryPoint)) { throw "Entry point not found: $EntryPoint" }
 if (-not (Test-Path -LiteralPath $ExamplePath)) { throw "Smoke-test example not found: $ExamplePath" }
 
@@ -47,10 +47,10 @@ $SpecOneDir = Join-Path $SpecRoot 'onedir'
 $SpecOneFile = Join-Path $SpecRoot 'onefile'
 New-Item -ItemType Directory -Force -Path $WorkOneDir, $WorkOneFile, $SpecOneDir, $SpecOneFile | Out-Null
 
-Write-Host 'Building NOVA one-folder distribution...' -ForegroundColor Cyan
+Write-Host 'Building RANCAGE one-folder distribution...' -ForegroundColor Cyan
 & $PythonExe -m PyInstaller `
     --noconfirm --clean --onedir --console `
-    --name nova `
+    --name cage `
     --paths $SourcePath `
     --distpath $OneDirDist `
     --workpath $WorkOneDir `
@@ -58,10 +58,10 @@ Write-Host 'Building NOVA one-folder distribution...' -ForegroundColor Cyan
     $EntryPoint
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller one-folder build failed with exit code $LASTEXITCODE" }
 
-Write-Host 'Building NOVA single-file executable...' -ForegroundColor Cyan
+Write-Host 'Building RANCAGE single-file executable...' -ForegroundColor Cyan
 & $PythonExe -m PyInstaller `
     --noconfirm --clean --onefile --console `
-    --name nova `
+    --name cage `
     --paths $SourcePath `
     --distpath $OneFileDist `
     --workpath $WorkOneFile `
@@ -69,14 +69,14 @@ Write-Host 'Building NOVA single-file executable...' -ForegroundColor Cyan
     $EntryPoint
 if ($LASTEXITCODE -ne 0) { throw "PyInstaller one-file build failed with exit code $LASTEXITCODE" }
 
-$OneDirApp = Join-Path $OneDirDist 'nova'
-$OneDirExe = Join-Path $OneDirApp 'nova.exe'
-$OneFileExe = Join-Path $OneFileDist 'nova.exe'
+$OneDirApp = Join-Path $OneDirDist 'cage'
+$OneDirExe = Join-Path $OneDirApp 'cage.exe'
+$OneFileExe = Join-Path $OneFileDist 'cage.exe'
 if (-not (Test-Path -LiteralPath $OneDirExe)) { throw "Expected one-folder executable not found: $OneDirExe" }
 if (-not (Test-Path -LiteralPath $OneFileExe)) { throw "Expected one-file executable not found: $OneFileExe" }
 
 New-Item -ItemType Directory -Force -Path $PackageRoot, $PortableRoot, (Join-Path $PackageRoot 'licenses') | Out-Null
-Copy-Item -LiteralPath $OneFileExe -Destination (Join-Path $PackageRoot 'nova.exe') -Force
+Copy-Item -LiteralPath $OneFileExe -Destination (Join-Path $PackageRoot 'cage.exe') -Force
 Copy-Item -Path (Join-Path $OneDirApp '*') -Destination $PortableRoot -Recurse -Force
 Copy-Item -LiteralPath (Join-Path $Root 'examples') -Destination $PackageRoot -Recurse -Force
 Copy-Item -LiteralPath (Join-Path $Root 'README-STANDALONE.md') -Destination (Join-Path $PackageRoot 'README.txt') -Force
@@ -102,7 +102,7 @@ if ($PyInstallerLicense -and (Test-Path -LiteralPath $PyInstallerLicense)) {
     Write-Warning 'PyInstaller COPYING.txt was not found in package metadata; retain the official license reference in THIRD-PARTY-NOTICES.txt.'
 }
 
-function Test-NovaExecutable {
+function Test-RancageExecutable {
     param(
         [Parameter(Mandatory = $true)][string]$Executable,
         [Parameter(Mandatory = $true)][string]$Label,
@@ -116,34 +116,34 @@ function Test-NovaExecutable {
     $VersionExitCode = $LASTEXITCODE
     if ($VersionExitCode -ne 0) { throw "$Label --version failed with exit code $VersionExitCode" }
     $VersionText = $VersionOutput -join "`n"
-    if ($VersionText -notmatch 'NOVA\s+\S+') { throw "$Label returned an unexpected version output: $VersionText" }
+    if ($VersionText -notmatch 'RANCAGE\s+\S+') { throw "$Label returned an unexpected version output: $VersionText" }
     Write-Host $VersionText
 
-    Write-Host "Smoke-testing ${Label}: hello.nova" -ForegroundColor Cyan
+    Write-Host "Smoke-testing ${Label}: hello.cage" -ForegroundColor Cyan
     $RunOutput = @(& $Executable run $Example 2>&1)
     $RunExitCode = $LASTEXITCODE
     if ($RunExitCode -ne 0) { throw "$Label hello-world execution failed with exit code $RunExitCode" }
     $RunText = $RunOutput -join "`n"
-    if ($RunText -notmatch 'Hello from NOVA' -or $RunText -notmatch 'NOVA v0\.1 is running\.') {
+    if ($RunText -notmatch 'Hello from RANCAGE' -or $RunText -notmatch 'RANCAGE v0\.1 is running\.') {
         throw "$Label returned unexpected program output: $RunText"
     }
     Write-Host $RunText
 }
 
-$StandaloneExe = Join-Path $DistRoot 'nova-windows-x64.exe'
+$StandaloneExe = Join-Path $DistRoot 'cage-windows-x64.exe'
 Copy-Item -LiteralPath $OneFileExe -Destination $StandaloneExe -Force
-$PortableExe = Join-Path $PortableRoot 'nova.exe'
+$PortableExe = Join-Path $PortableRoot 'cage.exe'
 
 # Verify both executables before packaging them.
-Test-NovaExecutable -Executable $StandaloneExe -Label 'one-file' -Example $ExamplePath
-Test-NovaExecutable -Executable $PortableExe -Label 'one-folder portable' -Example $ExamplePath
+Test-RancageExecutable -Executable $StandaloneExe -Label 'one-file' -Example $ExamplePath
+Test-RancageExecutable -Executable $PortableExe -Label 'one-folder portable' -Example $ExamplePath
 
 # Use Windows tar.exe instead of Compress-Archive. tar.exe avoids the ZIP
 # helper's occasional file-sharing conflict observed on some Windows systems.
 $TarCommand = Get-Command tar.exe -ErrorAction SilentlyContinue
 if (-not $TarCommand) { throw 'tar.exe was not found. It is required to create the portable ZIP archive.' }
 $TarExe = $TarCommand.Source
-$ZipPath = Join-Path $DistRoot 'nova-windows-x64.zip'
+$ZipPath = Join-Path $DistRoot 'cage-windows-x64.zip'
 $ArchiveCreated = $false
 
 for ($Attempt = 1; $Attempt -le 3; $Attempt++) {
@@ -172,18 +172,18 @@ Write-Host 'Validating portable ZIP contents...' -ForegroundColor Cyan
 $ArchiveListing = @(& $TarExe -tf $ZipPath 2>&1)
 if ($LASTEXITCODE -ne 0) { throw 'The generated ZIP could not be listed; archive validation failed.' }
 $ArchiveListingText = $ArchiveListing -join "`n"
-if ($ArchiveListingText -notmatch '(?m)(^|/)nova\.exe$') { throw 'The generated ZIP does not contain the root nova.exe.' }
-if ($ArchiveListingText -notmatch '(?m)(^|/)portable/nova\.exe$') { throw 'The generated ZIP does not contain portable/nova.exe.' }
+if ($ArchiveListingText -notmatch '(?m)(^|/)cage\.exe$') { throw 'The generated ZIP does not contain the root cage.exe.' }
+if ($ArchiveListingText -notmatch '(?m)(^|/)portable/cage\.exe$') { throw 'The generated ZIP does not contain portable/cage.exe.' }
 
 $HashLines = @(
-    "SHA256  nova-windows-x64.exe  $((Get-FileHash -LiteralPath $StandaloneExe -Algorithm SHA256).Hash)",
-    "SHA256  nova-windows-x64.zip  $((Get-FileHash -LiteralPath $ZipPath -Algorithm SHA256).Hash)"
+    "SHA256  cage-windows-x64.exe  $((Get-FileHash -LiteralPath $StandaloneExe -Algorithm SHA256).Hash)",
+    "SHA256  cage-windows-x64.zip  $((Get-FileHash -LiteralPath $ZipPath -Algorithm SHA256).Hash)"
 )
 $HashPath = Join-Path $DistRoot 'SHA256SUMS.txt'
 $HashLines | Set-Content -LiteralPath $HashPath -Encoding ascii
 
 Write-Host ''
-Write-Host 'NOVA standalone build and smoke tests completed successfully:' -ForegroundColor Green
+Write-Host 'RANCAGE standalone build and smoke tests completed successfully:' -ForegroundColor Green
 Write-Host "  $StandaloneExe"
 Write-Host "  $ZipPath"
 Write-Host "  $HashPath"

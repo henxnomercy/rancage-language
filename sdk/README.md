@@ -1,12 +1,12 @@
-# NOVA SDK extension contract (draft)
+# RANCAGE SDK extension contract (draft)
 
 This directory is the planned open extension surface. In 0.1 it contains the SDK policy only; there is not yet a stable external backend ABI.
 
 Future backend packages should provide:
 
-- A target identifier and supported NOVA language/IR versions.
+- A target identifier and supported RANCAGE language/IR versions.
 - A capability manifest (types, standard-library APIs, host imports, limitations).
-- A compiler entry point from NOVA IR to target artifacts.
+- A compiler entry point from RANCAGE IR to target artifacts.
 - Diagnostics with source locations.
 - A conformance test suite.
 - Documentation for toolchain versions, build flags, permissions, and packaging.

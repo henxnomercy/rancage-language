@@ -1,4 +1,4 @@
-name: NOVA Windows Standalone Build
+name: RANCAGE Windows Standalone Build
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ on:
       - "src/**"
       - "tests/**"
       - "examples/**"
-      - "nova_entry.py"
+      - "cage_entry.py"
       - "requirements-build.txt"
       - "build-windows.ps1"
       - "test-bundle.ps1"
@@ -23,7 +23,7 @@ on:
       - "src/**"
       - "tests/**"
       - "examples/**"
-      - "nova_entry.py"
+      - "cage_entry.py"
       - "requirements-build.txt"
       - "build-windows.ps1"
       - "test-bundle.ps1"
@@ -65,10 +65,10 @@ jobs:
       - name: Upload Windows artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: nova-windows-x64-standalone-preview
+          name: cage-windows-x64-standalone-preview
           path: |
-            dist/nova-windows-x64.exe
-            dist/nova-windows-x64.zip
+            dist/cage-windows-x64.exe
+            dist/cage-windows-x64.zip
             dist/SHA256SUMS.txt
           if-no-files-found: error
           retention-days: 30

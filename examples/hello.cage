@@ -1,0 +1,8 @@
+module hello;
+
+fn main() -> int {
+    let greeting: string = "Hello from RANCAGE";
+    print(greeting);
+    print("RANCAGE v0.1 is running.");
+    return 0;
+}

@@ -1,4 +1,4 @@
-"""Lexer for the NOVA language."""
+"""Lexer for the RANCAGE language."""
 from __future__ import annotations
 from dataclasses import dataclass
 
@@ -9,7 +9,7 @@ class Token:
     line: int
     column: int
 
-class NovaSyntaxError(Exception):
+class RancageSyntaxError(Exception):
     def __init__(self, message: str, line: int, column: int):
         super().__init__(message)
         self.message, self.line, self.column = message, line, column
@@ -59,7 +59,7 @@ class Lexer:
                 self._advance(); self._advance()
                 while not (self._peek() == "*" and self._peek(1) == "/"):
                     if self._peek() == "\0":
-                        raise NovaSyntaxError("Komentar blok tidak ditutup", start_line, start_col)
+                        raise RancageSyntaxError("Komentar blok tidak ditutup", start_line, start_col)
                     self._advance()
                 self._advance(); self._advance()
                 continue
@@ -88,17 +88,17 @@ class Lexer:
                 while self._peek() not in ('"', "\0"):
                     c = self._advance()
                     if c == "\n":
-                        raise NovaSyntaxError("String tidak boleh melewati baris", line, col)
+                        raise RancageSyntaxError("String tidak boleh melewati baris", line, col)
                     if c == "\\":
                         esc = self._advance()
                         mapping = {"n": "\n", "r": "\r", "t": "\t", '"': '"', "\\": "\\"}
                         if esc not in mapping:
-                            raise NovaSyntaxError(f"Escape sequence tidak dikenal: \\{esc}", self.line, self.column)
+                            raise RancageSyntaxError(f"Escape sequence tidak dikenal: \\{esc}", self.line, self.column)
                         chars.append(mapping[esc])
                     else:
                         chars.append(c)
                 if self._peek() != '"':
-                    raise NovaSyntaxError("String tidak ditutup", line, col)
+                    raise RancageSyntaxError("String tidak ditutup", line, col)
                 self._advance()
                 self._add("STRING", "".join(chars), line, col)
                 continue
@@ -111,6 +111,6 @@ class Lexer:
                 self._advance()
                 self._add("SYMBOL", ch, line, col)
                 continue
-            raise NovaSyntaxError(f"Karakter tidak dikenal: {ch!r}", line, col)
+            raise RancageSyntaxError(f"Karakter tidak dikenal: {ch!r}", line, col)
         self._add("EOF", "", self.line, self.column)
         return self.tokens

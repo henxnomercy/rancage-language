@@ -1,8 +1,8 @@
-# Building NOVA Standalone for Windows
+# Building RANCAGE Standalone for Windows
 
 ## Purpose
 
-This process bundles the NOVA CLI and the Python runtime into Windows executables. End users do not need a separate Python installation. The compiler implementation itself remains Python.
+This process bundles the RANCAGE CLI and the Python runtime into Windows executables. End users do not need a separate Python installation. The compiler implementation itself remains Python.
 
 ## Requirements
 
@@ -26,29 +26,29 @@ python -m unittest discover -s tests -v
 
 Outputs:
 
-- `dist\nova-windows-x64.exe` — single-file executable.
-- `dist\nova-windows-x64.zip` — complete distribution including the one-folder fallback and examples.
+- `dist\cage-windows-x64.exe` — single-file executable.
+- `dist\cage-windows-x64.zip` — complete distribution including the one-folder fallback and examples.
 - `dist\SHA256SUMS.txt` — SHA-256 hashes.
 
 ## GitHub Actions build
 
-Push commits to `feature/windows-standalone` or `main` to trigger the workflow automatically when relevant files change. A pull request targeting `main` also triggers it. The workflow supports manual execution using **Actions → NOVA Windows Standalone Build → Run workflow** (select the feature branch). A successful run uploads an artifact named `nova-windows-x64-standalone-preview` for 30 days.
+Push commits to `feature/windows-standalone` or `main` to trigger the workflow automatically when relevant files change. A pull request targeting `main` also triggers it. The workflow supports manual execution using **Actions → RANCAGE Windows Standalone Build → Run workflow** (select the feature branch). A successful run uploads an artifact named `cage-windows-x64-standalone-preview` for 30 days.
 
 ## Test a built executable
 
 ```powershell
-.\dist\onefile\nova.exe --version
-.\dist\onefile\nova.exe check examples\hello.nova
-.\dist\onefile\nova.exe run examples\hello.nova
+.\dist\onefile\cage.exe --version
+.\dist\onefile\cage.exe check examples\hello.cage
+.\dist\onefile\cage.exe run examples\hello.cage
 ```
 
-The automated smoke-test script checks both the one-file and one-folder variants, including building and running a `.nvm` file.
+The automated smoke-test script checks both the one-file and one-folder variants, including building and running a `.rcb` file.
 
 ## One-file vs one-folder
 
 - One-file is easier to distribute. Its first launch can be slower because it extracts bundled files to a temporary directory. Some endpoint security products may inspect or quarantine newly built executables.
-- One-folder keeps runtime files beside `nova.exe`, often starts faster, and is a fallback if one-file distribution causes problems. Keep the complete folder together.
+- One-folder keeps runtime files beside `cage.exe`, often starts faster, and is a fallback if one-file distribution causes problems. Keep the complete folder together.
 
 ## Important limitation
 
-A PyInstaller executable still contains the Python interpreter/runtime. It removes the end user's separate Python installation requirement; it does not make NOVA a native machine-code compiler or a self-hosting language. The `.nvm` program still runs on the NOVA VM included in the bundle.
+A PyInstaller executable still contains the Python interpreter/runtime. It removes the end user's separate Python installation requirement; it does not make RANCAGE a native machine-code compiler or a self-hosting language. The `.rcb` program still runs on the RANCAGE VM included in the bundle.
