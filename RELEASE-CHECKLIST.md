@@ -1,4 +1,4 @@
-# NOVA Standalone Release Checklist
+# RANCAGE Standalone Release Checklist
 
 Before publishing any Windows standalone release:
 
@@ -6,8 +6,8 @@ Before publishing any Windows standalone release:
 - [ ] GitHub Actions Windows build succeeds.
 - [ ] One-file executable smoke tests pass.
 - [ ] One-folder executable smoke tests pass.
-- [ ] Source `.nova` check/run pass from the packaged executable.
-- [ ] Bytecode `.nvm` build/run pass from the packaged executable.
+- [ ] Source `.cage` check/run pass from the packaged executable.
+- [ ] Bytecode `.rcb` build/run pass from the packaged executable.
 - [ ] Artifact is downloaded and tested on a clean Windows machine without Python installed.
 - [ ] SHA-256 hashes are published and verified.
 - [ ] Third-party notices accompany the distribution.

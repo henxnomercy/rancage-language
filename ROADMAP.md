@@ -1,19 +1,19 @@
-# NOVA Roadmap
+# RANCAGE Roadmap
 
 ## Published
 
 ### v0.1.0 — Initial reference implementation
 
-- Lexer, parser, AST, static type checker, NOVA-IR compiler, bounded VM, CLI, examples, and 13 tests.
+- Lexer, parser, AST, static type checker, RANCAGE-IR compiler, bounded VM, CLI, examples, and 13 tests.
 - Published tag `v0.1.0` remains immutable.
 
 ## Current development
 
 ### v0.2.0-alpha.1 — Windows standalone packaging preview
 
-- Bundle the Python runtime with NOVA using PyInstaller.
+- Bundle the Python runtime with RANCAGE using PyInstaller.
 - Produce one-file and one-folder Windows x64 builds.
-- Smoke-test source checks/runs and `.nvm` bytecode checks/runs.
+- Smoke-test source checks/runs and `.rcb` bytecode checks/runs.
 - Upload artifacts from GitHub Actions.
 - Keep language syntax and semantics unchanged.
 
@@ -29,7 +29,7 @@
 - Review type-system edges and error locations.
 - Formalize module/import design.
 - Expand standard-library design and tests.
-- Stabilize NOVA-IR versioning and bytecode validation.
+- Stabilize RANCAGE-IR versioning and bytecode validation.
 
 ### v0.4+ — Platform research and backends
 
@@ -40,7 +40,7 @@
 ### Long-term — Self-hosting
 
 - Mature the language enough to express compiler data structures and algorithms.
-- Implement a NOVA compiler in NOVA.
+- Implement a RANCAGE compiler in RANCAGE.
 - Bootstrap using the existing Python reference compiler, then compare outputs and run conformance tests.
 
 ## Release rule

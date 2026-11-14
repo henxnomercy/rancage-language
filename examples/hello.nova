@@ -1,8 +1,0 @@
-module hello;
-
-fn main() -> int {
-    let greeting: string = "Hello from NOVA";
-    print(greeting);
-    print("NOVA v0.1 is running.");
-    return 0;
-}

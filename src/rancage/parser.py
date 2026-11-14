@@ -1,7 +1,7 @@
-"""Recursive-descent parser and Pratt expression parser for NOVA 0.1."""
+"""Recursive-descent parser and Pratt expression parser for RANCAGE 0.1."""
 from __future__ import annotations
 from .ast import *
-from .lexer import Lexer, Token, NovaSyntaxError
+from .lexer import Lexer, Token, RancageSyntaxError
 
 PRECEDENCE = {"||": 1, "&&": 2, "==": 3, "!=": 3, "<": 4, "<=": 4, ">": 4, ">=": 4,
               "+": 5, "-": 5, "*": 6, "/": 6, "%": 6}
@@ -30,11 +30,11 @@ class Parser:
     def expect(self, value: str, message: str | None = None) -> Token:
         if self.check(value): return self.advance()
         tok = self.current()
-        raise NovaSyntaxError(message or f"Diharapkan {value!r}, ditemukan {tok.value!r}", tok.line, tok.column)
+        raise RancageSyntaxError(message or f"Diharapkan {value!r}, ditemukan {tok.value!r}", tok.line, tok.column)
 
     def identifier(self, message: str = "Diharapkan nama identifier") -> Token:
         tok = self.current()
-        if tok.kind != "IDENT": raise NovaSyntaxError(message, tok.line, tok.column)
+        if tok.kind != "IDENT": raise RancageSyntaxError(message, tok.line, tok.column)
         return self.advance()
 
     def parse(self) -> Program:
@@ -47,7 +47,7 @@ class Parser:
             functions.append(self.function())
         if not functions:
             tok = self.current()
-            raise NovaSyntaxError("Program harus memiliki minimal satu fungsi", tok.line, tok.column)
+            raise RancageSyntaxError("Program harus memiliki minimal satu fungsi", tok.line, tok.column)
         return Program(functions, module)
 
     def function(self) -> Function:
@@ -73,7 +73,7 @@ class Parser:
         body = []
         while not self.check("}"):
             if self.current().kind == "EOF":
-                tok = self.current(); raise NovaSyntaxError("Blok tidak ditutup dengan '}'", tok.line, tok.column)
+                tok = self.current(); raise RancageSyntaxError("Blok tidak ditutup dengan '}'", tok.line, tok.column)
             body.append(self.statement())
         self.expect("}")
         return body
@@ -143,7 +143,7 @@ class Parser:
             else:
                 left = Name(tok.value, Span(tok.line, tok.column))
         else:
-            raise NovaSyntaxError(f"Diharapkan ekspresi, ditemukan {tok.value!r}", tok.line, tok.column)
+            raise RancageSyntaxError(f"Diharapkan ekspresi, ditemukan {tok.value!r}", tok.line, tok.column)
         while True:
             op = self.current().value
             prec = PRECEDENCE.get(op, 0)

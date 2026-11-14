@@ -1,4 +1,4 @@
-"""Abstract syntax tree nodes for NOVA 0.1."""
+"""Abstract syntax tree nodes for RANCAGE 0.1."""
 from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Any

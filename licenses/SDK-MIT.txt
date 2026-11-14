@@ -1,9 +1,9 @@
 MIT License
 
-Copyright (c) 2026 NOVA Project contributors
+Copyright (c) 2026 RANCAGE Project contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of the SDK materials designated as MIT-licensed by the NOVA project, to deal
+of the SDK materials designated as MIT-licensed by the RANCAGE project, to deal
 in the SDK materials without restriction, including without limitation the
 rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the SDK materials, subject to inclusion of this notice.
@@ -17,4 +17,4 @@ OUT OF OR IN CONNECTION WITH THE SDK MATERIALS OR THE USE OR OTHER DEALINGS IN
 THE SDK MATERIALS.
 
 This notice applies only to files explicitly designated as SDK materials. It
-does not relicense the NOVA compiler/runtime core.
+does not relicense the RANCAGE compiler/runtime core.
