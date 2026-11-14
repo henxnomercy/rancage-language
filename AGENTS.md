@@ -1,21 +1,21 @@
-# Instructions for NOVA coding agents
+# Instructions for RANCAGE coding agents
 
 ## Current source of truth
 
 - Published baseline: `v0.1.0` (frozen).
 - Current development preview: `0.2.0-alpha.1` (Windows standalone packaging).
 - Active implementation language: Python 3.10+.
-- Canonical implementation: `src/nova/`.
+- Canonical implementation: `src/rancage/`.
 - Language specification: `SPEC.md`.
 - Implementation decision: `IMPLEMENTATION_DECISION.md`.
 - Current project status: `PROJECT_STATUS.md`.
 
 ## Non-negotiable rules
 
-1. Python is the approved implementation language for the active NOVA compiler, CLI, and reference VM. Do not add Rust/C/C++/Zig compiler code or Cargo files.
+1. Python is the approved implementation language for the active RANCAGE compiler, CLI, and reference VM. Do not add Rust/C/C++/Zig compiler code or Cargo files.
 2. The earlier Rust Core experiment is superseded and must not be merged into the canonical repository.
 3. Do not rewrite or move the published `v0.1.0` tag.
-4. Do not change NOVA syntax, language semantics, CLI behavior, or NOVA-IR format in a packaging-only task.
+4. Do not change RANCAGE syntax, language semantics, CLI behavior, or RANCAGE-IR format in a packaging-only task.
 5. PyInstaller is a build-time packaging dependency only. The packaged executable embeds Python; it is not a native compiler.
 6. Do not claim a standalone target works until its build and smoke tests have passed on that target OS.
 7. Never add API keys, tokens, passwords, signing keys, personal data, or `.env` files to Git.

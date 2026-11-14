@@ -1,11 +1,11 @@
-# AI Handoff — NOVA 0.2.0-alpha.1
+# AI Handoff — RANCAGE 0.2.0-alpha.1
 
 ## Source of truth
 
 - Published baseline: `v0.1.0`, commit `556b37f` (immutable).
 - Current development line: `0.2.0-alpha.1`.
 - Active compiler implementation: Python 3.10+.
-- Canonical compiler: `src/nova/`.
+- Canonical compiler: `src/rancage/`.
 - Language specification: `SPEC.md`.
 - Implementation policy: `IMPLEMENTATION_DECISION.md`.
 
@@ -15,10 +15,10 @@ Create a Windows standalone packaging preview using PyInstaller. This is a distr
 
 ## Added files
 
-- `nova_entry.py`: package entry point.
+- `cage_entry.py`: package entry point.
 - `requirements-build.txt`: pinned build-only PyInstaller dependency.
 - `build-windows.ps1`: builds one-file and one-folder Windows executables and distribution ZIP.
-- `test-bundle.ps1`: smoke-tests both executable variants, including `.nvm` build/run.
+- `test-bundle.ps1`: smoke-tests both executable variants, including `.rcb` build/run.
 - `.github/workflows/standalone-windows.yml`: Windows CI build and artifact upload.
 - `BUILDING-STANDALONE.md` and `THIRD-PARTY-NOTICES.md`: build and distribution documentation.
 
@@ -31,4 +31,4 @@ Create a Windows standalone packaging preview using PyInstaller. This is a distr
 
 ## Next smallest task
 
-Push this preview to the NOVA repository, inspect the `NOVA Windows Standalone Build` workflow, download its artifact, and test `nova.exe` on a Windows environment without Python installed.
+Push this preview to the RANCAGE repository, inspect the `RANCAGE Windows Standalone Build` workflow, download its artifact, and test `cage.exe` on a Windows environment without Python installed.

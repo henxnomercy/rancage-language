@@ -1,6 +1,6 @@
-"""Honest capability registry for the NOVA 0.1 roadmap."""
+"""Honest capability registry for the RANCAGE 0.1 roadmap."""
 TARGETS = [
-    ("nova-vm", "Reference bytecode VM", "implemented-experimental", "Runs NOVA-IR .nvm in the reference runtime"),
+    ("rancage-vm", "Reference bytecode VM", "implemented-experimental", "Runs RANCAGE-IR .rcb in the reference runtime"),
     ("native", "Native machine code", "planned", "x86-64, ARM64, RISC-V; platform-specific toolchains required"),
     ("wasm", "WebAssembly", "planned", "Browser and WASI-style host environments"),
     ("dotnet", ".NET", "planned", "Managed .NET integration"),

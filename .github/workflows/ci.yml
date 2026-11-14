@@ -1,4 +1,4 @@
-name: NOVA 0.1 CI
+name: RANCAGE 0.1 CI
 
 on:
   push:
@@ -36,10 +36,10 @@ jobs:
 
       - name: Verify CLI
         run: |
-          nova --version
-          nova check examples/hello.nova
-          nova run examples/hello.nova
-          nova check examples/functions.nova
-          nova run examples/functions.nova
-          nova check examples/control_flow.nova
-          nova run examples/control_flow.nova
+          cage --version
+          cage check examples/hello.cage
+          cage run examples/hello.cage
+          cage check examples/functions.cage
+          cage run examples/functions.cage
+          cage check examples/control_flow.cage
+          cage run examples/control_flow.cage

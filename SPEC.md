@@ -1,13 +1,13 @@
-# NOVA Founding Specification
+# RANCAGE Founding Specification
 
 **Document status:** adopted project baseline  
 **Language version:** 0.1  
 **Specification revision:** 2026-11-11  
-**Working name:** NOVA (name is provisional and has not been trademark-cleared)
+**Working name:** RANCAGE (name is provisional and has not been trademark-cleared)
 
 ## 1. Mission
 
-NOVA is intended to be a general-purpose, portable programming language with one source language and a hybrid compilation architecture. The project aims to support desktop, mobile, web, server, game-engine, embedded, industrial, and future computing environments through interchangeable backends and host integrations.
+RANCAGE is intended to be a general-purpose, portable programming language with one source language and a hybrid compilation architecture. The project aims to support desktop, mobile, web, server, game-engine, embedded, industrial, and future computing environments through interchangeable backends and host integrations.
 
 "Universal" is a design goal, not a claim that one executable can run unchanged on every device. Platform-specific APIs, SDKs, permissions, application packaging, CPU architectures, and runtime constraints still apply.
 
@@ -15,7 +15,7 @@ NOVA is intended to be a general-purpose, portable programming language with one
 
 | Decision | Adopted value | Consequence |
 |---|---|---|
-| Compiler architecture | Hybrid | Platform-neutral NOVA IR plus native, VM, WebAssembly, and transpiler backends over time |
+| Compiler architecture | Hybrid | Platform-neutral RANCAGE IR plus native, VM, WebAssembly, and transpiler backends over time |
 | Security ambition | Maximum | Defense in depth; security review and threat modelling are required for each release |
 | Development priority | Universal by design | Stable language core and extensible target interface; implementation delivered incrementally |
 | Ownership | Hybrid | Proposed proprietary compiler/runtime core with an open SDK and extension interface |
@@ -26,7 +26,7 @@ The hybrid ownership model is a project policy proposal. The final copyright own
 
 ### 3.1 Source files
 
-- Source extension: `.nova`
+- Source extension: `.cage`
 - Text encoding: UTF-8
 - Case-sensitive identifiers
 - Line comments: `// ...`
@@ -44,7 +44,7 @@ The hybrid ownership model is a project policy proposal. The final copyright own
 | `string` | UTF-8 text |
 | `void` | No return value |
 
-NOVA 0.1 uses static type checking. There is no implicit conversion between `int` and `float` in this release. The `+` operator also concatenates two strings.
+RANCAGE 0.1 uses static type checking. There is no implicit conversion between `int` and `float` in this release. The `+` operator also concatenates two strings.
 
 ### 3.3 Grammar sketch (0.1 subset)
 
@@ -92,24 +92,24 @@ Boolean operators in 0.1 evaluate both operands; short-circuit semantics are res
 ## 4. Compiler architecture
 
 ```text
-.nova source
+.cage source
     -> Lexer
     -> Parser / AST
     -> Static type checker
-    -> NOVA IR
+    -> RANCAGE IR
     -> Selected backend
     -> target artifact + metadata
 ```
 
-The NOVA IR is the stable semantic boundary between the language frontend and platform backends. Backends must document unsupported features and target-specific behavior. A backend must not silently change language semantics.
+The RANCAGE IR is the stable semantic boundary between the language frontend and platform backends. Backends must document unsupported features and target-specific behavior. A backend must not silently change language semantics.
 
-### 4.1 NOVA IR 0.1
+### 4.1 RANCAGE IR 0.1
 
 The first implementation serializes a stack-based instruction representation as JSON with the header:
 
 ```json
 {
-  "format": "NOVA-IR",
+  "format": "RANCAGE-IR",
   "version": "0.1",
   "module": "hello",
   "entry": "main",
@@ -117,13 +117,13 @@ The first implementation serializes a stack-based instruction representation as 
 }
 ```
 
-The `.nvm` extension identifies this reference bytecode container. It is a development format, not yet a stable cross-version ABI or a hardened binary format.
+The `.rcb` extension identifies this reference bytecode container. It is a development format, not yet a stable cross-version ABI or a hardened binary format.
 
 ### 4.2 Backend roadmap and status
 
 | Backend / integration | Intended targets | Status in 0.1 |
 |---|---|---|
-| NOVA reference VM | Development, tests, portable bytecode execution | Implemented, experimental |
+| RANCAGE reference VM | Development, tests, portable bytecode execution | Implemented, experimental |
 | Native | x86-64, ARM64, RISC-V; Windows, Linux, macOS | Planned |
 | WebAssembly | Browser and WASI-style server environments | Planned |
 | Managed | JVM and .NET environments | Planned |
@@ -135,7 +135,7 @@ A platform appears in the roadmap only as an intended target. It is not supporte
 
 ## 5. Runtime and standard library policy
 
-NOVA 0.1 includes only `print`. It intentionally has no filesystem, network, process, reflection, dynamic library loading, or native FFI operations. This keeps the initial VM small and limits accidental host access.
+RANCAGE 0.1 includes only `print`. It intentionally has no filesystem, network, process, reflection, dynamic library loading, or native FFI operations. This keeps the initial VM small and limits accidental host access.
 
 Future standard-library capabilities will be capability-oriented: an application receives only the host APIs and permissions it needs. Platform integrations must document permissions, data access, and failure modes.
 
@@ -143,7 +143,7 @@ Future standard-library capabilities will be capability-oriented: an application
 
 ### 6.1 Threat model
 
-NOVA aims to reduce unauthorized modification, casual source recovery, and tampering. It does not promise that distributed client-side software is impossible to reverse engineer. A determined analyst controlling a device can inspect memory, observe behavior, patch binaries, or emulate execution.
+RANCAGE aims to reduce unauthorized modification, casual source recovery, and tampering. It does not promise that distributed client-side software is impossible to reverse engineer. A determined analyst controlling a device can inspect memory, observe behavior, patch binaries, or emulate execution.
 
 ### 6.2 Planned controls
 

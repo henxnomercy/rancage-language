@@ -1,16 +1,16 @@
-# NOVA — Universal Programming Language
+# RANCAGE — Universal Programming Language
 
 **Development version:** `0.2.0-alpha.1`
-**Language baseline:** NOVA 0.1 syntax and semantics
+**Language baseline:** RANCAGE 0.1 syntax and semantics
 **Implementation:** Python reference compiler and VM
 
-NOVA is an experimental general-purpose programming language project. This repository contains its reference implementation: lexer, parser, AST, static type checker, NOVA-IR bytecode compiler, bounded virtual machine, CLI, examples, and tests.
+RANCAGE is an experimental general-purpose programming language project. This repository contains its reference implementation: lexer, parser, AST, static type checker, RANCAGE-IR bytecode compiler, bounded virtual machine, CLI, examples, and tests.
 
-> **Current reality:** the implemented target is the Python reference VM. NOVA does not yet compile to native machine code, Android APK/AAB, iOS apps, WebAssembly, Roblox Luau, or other production targets.
+> **Current reality:** the implemented target is the Python reference VM. RANCAGE does not yet compile to native machine code, Android APK/AAB, iOS apps, WebAssembly, Roblox Luau, or other production targets.
 
 ## Implementation decision
 
-The active compiler, CLI, and reference VM are implemented in **Python 3.10+**. NOVA source files use the `.nova` language and are not Python programs. Rust is not part of the active implementation. Read [IMPLEMENTATION_DECISION.md](IMPLEMENTATION_DECISION.md).
+The active compiler, CLI, and reference VM are implemented in **Python 3.10+**. RANCAGE source files use the `.cage` extension and are not Python programs. Rust is not part of the active implementation. Read [IMPLEMENTATION_DECISION.md](IMPLEMENTATION_DECISION.md).
 
 ## Development setup
 
@@ -20,42 +20,44 @@ Windows source checkout:
 
 ```powershell
 python --version
-.\nova.cmd --version
+.\cage.cmd --version
 .\run-tests.cmd
-.\nova.cmd check examples\hello.nova
-.\nova.cmd run examples\hello.nova
+.\cage.cmd check examples\hello.cage
+.\cage.cmd run examples\hello.cage
 ```
 
 Linux/macOS source checkout:
 
 ```bash
-PYTHONPATH=src python -m nova --version
+PYTHONPATH=src python -m cage --version
 PYTHONPATH=src python -m unittest discover -s tests -v
-PYTHONPATH=src python -m nova run examples/hello.nova
+PYTHONPATH=src python -m cage run examples/hello.cage
 ```
 
 ## Windows standalone preview
 
 The `0.2.0-alpha.1` development line adds a **Windows executable packaging pipeline** using PyInstaller. The end-user package is intended to run without a separate Python installation because the Python runtime is bundled into the distribution.
 
-This is a packaged Python application, **not** a native compiler rewrite and **not** self-hosting NOVA. Python remains the language used to implement the compiler. PyInstaller is a build-time tool; end users do not install it.
+This is a packaged Python application, **not** a native compiler rewrite and **not** self-hosting RANCAGE. Python remains the language used to implement the compiler. PyInstaller is a build-time tool; end users do not install it.
 
 To build on Windows: see [BUILDING-STANDALONE.md](BUILDING-STANDALONE.md). The build must run on Windows to produce a Windows executable; PyInstaller is not a cross-compiler. The GitHub Actions workflow `.github/workflows/standalone-windows.yml` builds and smoke-tests the Windows x64 package, then uploads it as a workflow artifact.
 
 The pipeline produces:
 
-- `nova-windows-x64.exe`: single-file executable (first start may be slower because bundled runtime files are extracted).
-- `nova-windows-x64.zip`: a package containing the single-file executable, a one-folder fallback, examples, and notices.
+- `cage-windows-x64.exe`: single-file executable (first start may be slower because bundled runtime files are extracted).
+- `cage-windows-x64.zip`: a package containing the single-file executable, a one-folder fallback, examples, and notices.
 
 ## CLI commands
 
 ```powershell
-.\nova.cmd check examples\hello.nova
-.\nova.cmd build examples\hello.nova -o build\hello.nvm
-.\nova.cmd run examples\hello.nova
-.\nova.cmd run build\hello.nvm
-.\nova.cmd targets
+.\cage.cmd check examples\hello.cage
+.\cage.cmd build examples\hello.cage -o build\hello.rcb
+.\cage.cmd run examples\hello.cage
+.\cage.cmd run build\hello.rcb
+.\cage.cmd targets
 ```
+
+The canonical file extensions are `.cage` for source code and `.rcb` for compiled bytecode. The primary command is `cage` (`cage.exe` on Windows); `rancage` remains an alias for systems where `cage` is already used by another application. The old `.nova`, `.nvm`, and interim `.rcg` extensions are no longer accepted by source CLI commands. Existing source files can be renamed to `.cage`; legacy NOVA-IR bytecode can be renamed from `.nvm` to `.rcb` and remains readable by the VM.
 
 ## Implemented language features
 
@@ -80,8 +82,8 @@ For the bundled Windows executables, run `test-bundle.ps1` after building. This 
 
 ## Security and packaging notes
 
-NOVA `.nvm` bytecode is JSON-based and readable/editable. PyInstaller packaging is a deployment convenience, not obfuscation or tamper protection. Do not put API keys or secrets in NOVA client-side programs. Review [SECURITY.md](SECURITY.md) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
+RANCAGE `.rcb` bytecode is JSON-based and readable/editable. PyInstaller packaging is a deployment convenience, not obfuscation or tamper protection. Do not put API keys or secrets in RANCAGE client-side programs. Review [SECURITY.md](SECURITY.md) and [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md).
 
 ## Project status
 
-`v0.1.0` remains the frozen initial release. `0.2.0-alpha.1` is an unreleased development preview focused on Windows standalone packaging; the NOVA language grammar and semantics are not intentionally changed in this preview. CI and Windows executable smoke tests must pass before publishing a release.
+`v0.1.0` remains the frozen initial release. `0.2.0-alpha.1` is an unreleased development preview focused on Windows standalone packaging; the RANCAGE language grammar and semantics are not intentionally changed in this preview. CI and Windows executable smoke tests must pass before publishing a release.

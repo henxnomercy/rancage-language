@@ -1,4 +1,4 @@
-"""NOVA 0.1 compiler: typed AST -> portable NOVA IR bytecode."""
+"""RANCAGE 0.1 compiler: typed AST -> portable RANCAGE IR bytecode."""
 from __future__ import annotations
 from .ast import *
 
@@ -20,7 +20,7 @@ class Compiler:
                 "code": self.code,
             }
         return {
-            "format": "NOVA-IR",
+            "format": "RANCAGE-IR",
             "version": "0.1",
             "module": self.program.module,
             "entry": "main",
