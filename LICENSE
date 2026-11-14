@@ -1,0 +1,43 @@
+# RANCAGE Hybrid License Notice
+
+Copyright (c) 2026 henxnomercy. All rights reserved, except where a separate
+license notice expressly says otherwise.
+
+RANCAGE uses separate terms for different parts of this repository:
+
+1. **RANCAGE Core and CAGE:** The compiler, virtual machine, runtime, launcher,
+   and official CAGE executable are proprietary. They are governed by
+   `licenses/CORE-PROPRIETARY.txt`.
+2. **RANCAGE SDK materials:** Only files explicitly identified as MIT-licensed
+   SDK materials are licensed under the MIT License in
+   `licenses/SDK-MIT.txt`. The current `sdk/` directory is an early extension
+   contract, not a stable production SDK or supported external ABI.
+3. **Third-party materials:** Components and assets supplied by third parties
+   remain subject to their own license terms. See `THIRD-PARTY-NOTICES.md`
+   and the relevant notices distributed with official packages.
+4. **Other project materials:** Unless a file has its own license notice or is
+   explicitly included in the MIT-licensed SDK scope, documentation,
+   specifications, examples, tests, build scripts, and other repository
+   contents are not granted a general reuse license by this notice. All rights
+   are reserved by the applicable rights holder.
+
+## Use of CAGE to create applications
+
+The Core license grants users permission to use the unmodified official CAGE
+release to create, compile, test, and run their own RANCAGE programs, including
+programs and applications offered commercially, without royalties to
+henxnomercy. The terms and limits of that permission are set out in
+`licenses/CORE-PROPRIETARY.txt`.
+
+## Public GitHub repository
+
+Public visibility does not make RANCAGE Core open-source. GitHub's Terms of
+Service allow users to view and fork public repositories through GitHub's
+service. Those platform rights are limited to the rights granted by GitHub's
+Terms and do not provide a separate general license to use, modify, or
+redistribute RANCAGE Core outside those terms.
+
+This notice is a map of the project's licensing boundaries. It should be read
+together with the specific license files. For questions or additional
+permissions, contact the maintainer through
+https://github.com/henxnomercy.

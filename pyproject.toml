@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68"]
+requires = ["setuptools>=77.0.3"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,8 +8,14 @@ version = "0.2.0a1"
 description = "RANCAGE Universal Language reference compiler and bytecode VM"
 readme = "README.md"
 requires-python = ">=3.10"
-license = { file = "licenses/CORE-PROPRIETARY.txt" }
-authors = [{ name = "RANCAGE Project" }]
+license = "LicenseRef-RANCAGE-Proprietary"
+license-files = [
+  "LICENSE",
+  "licenses/CORE-PROPRIETARY.txt",
+  "licenses/SDK-MIT.txt",
+  "THIRD-PARTY-NOTICES.md",
+]
+authors = [{ name = "henxnomercy" }]
 keywords = ["programming-language", "compiler", "virtual-machine", "bytecode"]
 classifiers = [
   "Programming Language :: Python :: 3",

@@ -1,7 +1,110 @@
-RANCAGE CORE — PROVISIONAL PROPRIETARY NOTICE
+RANCAGE CORE — PROPRIETARY LICENSE
 
-Copyright (c) [OWNER TO BE CONFIRMED]. All rights reserved.
+Copyright (c) 2026 henxnomercy. All rights reserved.
 
-This notice records the intended ownership model for the RANCAGE compiler and runtime core. The copyright owner, permitted users, redistribution rights, commercial terms, and enforcement terms have not yet been confirmed. This placeholder is not a finalized commercial license and should be replaced by a reviewed license before public distribution.
+Version: 0.1 (initial project terms)
 
-No ownership, trademark registration, or legal exclusivity is claimed by this placeholder.
+IMPORTANT: This is a project-specific license draft prepared from the
+maintainer's stated intentions. It is not a substitute for advice from an
+Indonesian intellectual-property lawyer. Review it before public release or
+commercial distribution.
+
+1. SCOPE
+
+"RANCAGE Core" means the proprietary compiler, parser, type checker, virtual
+machine, runtime, command-line implementation, and official CAGE executable
+provided by the RANCAGE project, including the implementation in `src/rancage/`
+and its project entry points and launchers. It does not include third-party
+components governed by their own licenses or SDK materials expressly licensed
+under `licenses/SDK-MIT.txt`.
+
+2. LIMITED PERMISSION TO USE CAGE
+
+Subject to these terms, henxnomercy grants you a worldwide, non-exclusive,
+royalty-free permission to obtain, install, and run an unmodified official
+CAGE release for the purpose of creating, compiling, testing, and running
+programs written by you in the RANCAGE language.
+
+This permission covers personal, educational, research, internal business,
+and commercial development. You may use CAGE to build software that you sell,
+license, publish, or otherwise distribute. You do not owe henxnomercy a fee or
+royalty for the applications you create merely because you used CAGE.
+
+3. YOUR PROGRAMS AND OUTPUT
+
+You retain your rights in original source code, data, and application logic
+that you create independently using RANCAGE. You may publish, license, sell,
+and distribute your own `.cage` programs and generated `.rcb` output, including
+for commercial purposes, without paying royalties to henxnomercy, provided
+you do not include or redistribute RANCAGE Core itself as part of that
+material. Third-party material included in your programs remains subject to
+its own terms.
+
+This license does not require you to publish your application source code or
+give RANCAGE contributors ownership of your applications.
+
+4. RESTRICTIONS ON THE CORE
+
+Except for the limited use permission in Section 2 and rights that cannot
+lawfully be restricted, you may not, without separate prior written
+permission from henxnomercy:
+
+- modify, adapt, translate, or create derivative works of RANCAGE Core;
+- redistribute, sublicense, sell, rent, lease, or publicly mirror copies of
+  RANCAGE Core source code or binaries outside the limited GitHub platform
+  rights described in Section 5;
+- bundle, embed, or ship the CAGE executable, compiler, VM, or runtime with
+  your application or product;
+- offer RANCAGE Core itself as a hosted, managed, or white-label service; or
+- remove or alter copyright, attribution, or proprietary notices in copies
+  you are authorized to use.
+
+No ownership of RANCAGE Core is transferred to you. No license is granted by
+implication, estoppel, or otherwise except for the permissions expressly
+stated in this document.
+
+5. PUBLIC SOURCE ON GITHUB
+
+The RANCAGE repository may be publicly viewable on GitHub. GitHub's Terms of
+Service grant GitHub users limited rights to view and fork public repository
+content through GitHub's service. This license acknowledges those platform
+rights; it does not grant a separate general right to use, modify, or
+redistribute RANCAGE Core outside the rights provided by GitHub's Terms of
+Service and the limited permission in Section 2.
+
+A GitHub fork is not, by itself, a grant of a proprietary software license or
+permission to distribute a modified CAGE product.
+
+6. SDK AND THIRD-PARTY MATERIALS
+
+This license does not apply to files expressly marked as MIT-licensed SDK
+materials under `licenses/SDK-MIT.txt`, or to third-party materials governed
+by their own license notices. If terms conflict, the applicable separate
+license controls for that material only.
+
+7. TRADEMARKS
+
+No trademark, service mark, logo, or branding rights in RANCAGE or CAGE are
+granted by this license.
+
+8. TERMINATION
+
+The permissions in this license terminate automatically if you materially
+breach these terms. Upon termination, stop using and delete copies of
+RANCAGE Core in your possession, except to the extent retention is required
+by law. Sections concerning ownership, restrictions, disclaimers, and
+liability survive termination.
+
+9. DISCLAIMER AND LIABILITY
+
+RANCAGE Core is provided "AS IS" and "AS AVAILABLE", without warranties or
+conditions of any kind, to the maximum extent permitted by applicable law.
+To the maximum extent permitted by applicable law, henxnomercy will not be
+liable for indirect, incidental, special, consequential, exemplary, or
+punitive damages, or for loss of data, profits, or business arising from use
+of RANCAGE Core.
+
+10. PERMISSIONS AND CONTACT
+
+For permissions beyond this license, contact the maintainer through
+https://github.com/henxnomercy.
