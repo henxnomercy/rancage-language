@@ -37,3 +37,6 @@ Thumbs.db
 .pyinstaller-work/
 .pyinstaller-spec/
 *.spec
+
+# Local Windows standalone artifact
+/cage-windows-x64.exe
