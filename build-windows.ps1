@@ -86,22 +86,46 @@ $LicenseSource = Join-Path $Root 'licenses'
 if (Test-Path -LiteralPath $LicenseSource) {
     Copy-Item -Path (Join-Path $LicenseSource '*') -Destination (Join-Path $PackageRoot 'licenses') -Recurse -Force
 }
+$RepositoryLicense = Join-Path $Root 'LICENSE'
+if (Test-Path -LiteralPath $RepositoryLicense) {
+    Copy-Item -LiteralPath $RepositoryLicense -Destination (Join-Path $PackageRoot 'LICENSE.txt') -Force
+} else {
+    throw 'Repository LICENSE file was not found; refusing to package without the project licensing notice.'
+}
 
 $PythonBase = (& $PythonExe -c 'import sys; print(sys.base_prefix)').Trim()
-$PythonLicense = Join-Path $PythonBase 'LICENSE.txt'
-if (Test-Path -LiteralPath $PythonLicense) {
-    Copy-Item -LiteralPath $PythonLicense -Destination (Join-Path $PackageRoot 'licenses\PYTHON-LICENSE.txt') -Force
-} else {
-    Write-Warning "Python LICENSE.txt was not found at $PythonLicense; retain the official license reference in THIRD-PARTY-NOTICES.txt."
+$PythonBaseExitCode = $LASTEXITCODE
+if ($PythonBaseExitCode -ne 0 -or [string]::IsNullOrWhiteSpace($PythonBase)) {
+    throw 'Could not determine the active Python base installation; refusing to package without its license.'
 }
 
-$PyInstallerLicense = (& $PythonExe -c "import importlib.metadata as m; d=m.distribution('pyinstaller'); f=next((x for x in (d.files or []) if 'COPYING' in str(x).upper()), None); print(d.locate_file(f) if f else '')").Trim()
-if ($PyInstallerLicense -and (Test-Path -LiteralPath $PyInstallerLicense)) {
-    Copy-Item -LiteralPath $PyInstallerLicense -Destination (Join-Path $PackageRoot 'licenses\PYINSTALLER-COPYING.txt') -Force
-} else {
-    Write-Warning 'PyInstaller COPYING.txt was not found in package metadata; retain the official license reference in THIRD-PARTY-NOTICES.txt.'
+$PythonLicenseCandidates = @(
+    (Join-Path $PythonBase 'LICENSE.txt'),
+    (Join-Path $PythonBase 'LICENSE')
+)
+$PythonLicense = $PythonLicenseCandidates |
+    Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } |
+    Select-Object -First 1
+if (-not $PythonLicense) {
+    throw "Python license file was not found under $PythonBase; refusing to package without it."
 }
+Copy-Item -LiteralPath $PythonLicense -Destination (Join-Path $PackageRoot 'licenses\PYTHON-LICENSE.txt') -Force
 
+$PyInstallerLicenseCode = "import importlib.metadata as m; d=m.distribution('pyinstaller'); fs=d.files or []; f=next((x for x in fs if str(x).replace(chr(92), '/').split('/')[-1].lower() == 'copying.txt'), None); print(d.locate_file(f) if f else '')"
+$PyInstallerLicense = (& $PythonExe -c $PyInstallerLicenseCode).Trim()
+$PyInstallerLicenseExitCode = $LASTEXITCODE
+if ($PyInstallerLicenseExitCode -ne 0 -or [string]::IsNullOrWhiteSpace($PyInstallerLicense) -or -not (Test-Path -LiteralPath $PyInstallerLicense -PathType Leaf)) {
+    throw 'PyInstaller COPYING.txt was not found in installed package metadata; refusing to package without the pinned build tool license notice.'
+}
+Copy-Item -LiteralPath $PyInstallerLicense -Destination (Join-Path $PackageRoot 'licenses\PYINSTALLER-COPYING.txt') -Force
+
+$HooksContribLicenseCode = "import importlib.metadata as m; d=m.distribution('pyinstaller-hooks-contrib'); fs=d.files or []; f=next((x for x in fs if str(x).replace(chr(92), '/').split('/')[-1].lower() in ('license', 'license.txt')), None); print(d.locate_file(f) if f else '')"
+$HooksContribLicense = (& $PythonExe -c $HooksContribLicenseCode).Trim()
+$HooksContribLicenseExitCode = $LASTEXITCODE
+if ($HooksContribLicenseExitCode -ne 0 -or [string]::IsNullOrWhiteSpace($HooksContribLicense) -or -not (Test-Path -LiteralPath $HooksContribLicense -PathType Leaf)) {
+    throw 'pyinstaller-hooks-contrib LICENSE was not found in installed package metadata; refusing to package without its third-party license notice.'
+}
+Copy-Item -LiteralPath $HooksContribLicense -Destination (Join-Path $PackageRoot 'licenses\PYINSTALLER-HOOKS-CONTRIB-LICENSE.txt') -Force
 function Test-RancageExecutable {
     param(
         [Parameter(Mandatory = $true)][string]$Executable,
@@ -174,6 +198,25 @@ if ($LASTEXITCODE -ne 0) { throw 'The generated ZIP could not be listed; archive
 $ArchiveListingText = $ArchiveListing -join "`n"
 if ($ArchiveListingText -notmatch '(?m)(^|/)cage\.exe$') { throw 'The generated ZIP does not contain the root cage.exe.' }
 if ($ArchiveListingText -notmatch '(?m)(^|/)portable/cage\.exe$') { throw 'The generated ZIP does not contain portable/cage.exe.' }
+$RequiredArchiveFiles = @(
+    'LICENSE.txt',
+    'THIRD-PARTY-NOTICES.txt',
+    'licenses/CORE-PROPRIETARY.txt',
+    'licenses/SDK-MIT.txt',
+    'licenses/PYTHON-LICENSE.txt',
+    'licenses/PYINSTALLER-COPYING.txt',
+    'licenses/PYINSTALLER-HOOKS-CONTRIB-LICENSE.txt'
+)
+
+foreach ($RequiredFile in $RequiredArchiveFiles) {
+    $Pattern = '(?m)(^|/)' + [regex]::Escape($RequiredFile) + '$'
+
+    if ($ArchiveListingText -notmatch $Pattern) {
+        throw "The generated ZIP is missing required license notice: $RequiredFile"
+    }
+}
+
+Write-Host 'All required license notices are present in the ZIP.' -ForegroundColor Green
 
 $HashLines = @(
     "SHA256  cage-windows-x64.exe  $((Get-FileHash -LiteralPath $StandaloneExe -Algorithm SHA256).Hash)",

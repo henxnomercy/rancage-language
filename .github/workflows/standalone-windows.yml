@@ -15,6 +15,10 @@ on:
       - "build-windows.ps1"
       - "test-bundle.ps1"
       - "README-STANDALONE.md"
+      - "pyproject.toml"
+      - "LICENSE"
+      - "licenses/**"
+      - "sdk/**"
       - "THIRD-PARTY-NOTICES.md"
       - ".github/workflows/standalone-windows.yml"
   pull_request:
@@ -28,6 +32,10 @@ on:
       - "build-windows.ps1"
       - "test-bundle.ps1"
       - "README-STANDALONE.md"
+      - "pyproject.toml"
+      - "LICENSE"
+      - "licenses/**"
+      - "sdk/**"
       - "THIRD-PARTY-NOTICES.md"
       - ".github/workflows/standalone-windows.yml"
 
