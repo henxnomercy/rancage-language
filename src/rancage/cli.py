@@ -47,7 +47,7 @@ def main(argv: list[str] | None = None) -> int:
                 print("Error: source harus berekstensi .cage", file=sys.stderr)
                 return 2
             compile_source(args.source)
-            print(f"OK: {args.source} valid (RANCAGE 0.1)")
+            print(f"OK: {args.source} valid (RANCAGE {__version__})")
             return 0
         if args.command == "build":
             if args.source.suffix.lower() != ".cage":
@@ -60,7 +60,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"Built: {output}")
             return 0
         if args.command == "targets":
-            print("RANCAGE 0.1 target registry (planned != supported):")
+            print(f"RANCAGE {__version__} target registry (planned != supported):")
             for target_id, name, status, notes in TARGETS:
                 print(f"{target_id:12} {status:25} {name} — {notes}")
             return 0

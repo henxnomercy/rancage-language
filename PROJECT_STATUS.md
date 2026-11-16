@@ -22,8 +22,9 @@ approved.
 - Functions, variables, conditions, loops, and execution limits.
 - Canonical `.cage` source and `.rcb` bytecode extensions.
 - `cage` / `cage.exe` CLI, with `rancage` as an alias.
-- 16 unit/integration tests after the identity migration.
+- 74 unit, integration, and QA verification tests covering language features, Stage 0 milestones M0.1-M0.5, golden-path integration, RANCAGE-IR 0.1 compatibility, and post-audit runtime hardening.
 - Windows one-file and one-folder PyInstaller packaging scripts and smoke tests.
+- Stage 0 Milestone M0.5 implementation complete, pending QA verification and owner sign-off.
 
 ## Verification status
 

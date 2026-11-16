@@ -14,8 +14,10 @@ class RancageSyntaxError(Exception):
         super().__init__(message)
         self.message, self.line, self.column = message, line, column
 
-SINGLE = set("{}():,;+-*/%=<>!")
+SINGLE = set("{}():,;+-*/%=<>![]?.")
 DOUBLE = {"->", "==", "!=", "<=", ">=", "&&", "||"}
+KEYWORDS = {"module", "fn", "let", "const", "return", "if", "else", "while", "record"}
+RESERVED = KEYWORDS | {"null", "true", "false"}
 
 class Lexer:
     def __init__(self, source: str):
